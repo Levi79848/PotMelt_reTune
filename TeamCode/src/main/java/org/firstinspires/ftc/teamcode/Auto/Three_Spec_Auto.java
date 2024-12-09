@@ -14,8 +14,8 @@ import org.firstinspires.ftc.teamcode.Auto.Actions.ArmActions;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
-@Autonomous(name = "Spec_Auto", group = "Autonomous")
-public class Spec_Auto extends LinearOpMode {
+@Autonomous(name = "Three_Spec_Auto", group = "Autonomous")
+public class Three_Spec_Auto extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -32,12 +32,16 @@ public class Spec_Auto extends LinearOpMode {
             return;
         }
 
+
         ArmActions armActions = new ArmActions(hardwareMap);
         //ArmActions  Arm = new ArmActions(hardwareMap);
 
 
 
         TrajectoryActionBuilder traj_1 = drive.actionBuilder(startPose)
+                .strafeTo(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y+1));
+
+        TrajectoryActionBuilder traj_1_finish = drive.actionBuilder(new Pose2d(subPoseMid.position.x-10, subPoseMid.position.y+1, Math.toRadians(90)))
                 .strafeTo(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y-3));
 
         TrajectoryActionBuilder traj_2 = drive.actionBuilder(new Pose2d(-10, 32, Math.toRadians(90)))
@@ -50,12 +54,9 @@ public class Spec_Auto extends LinearOpMode {
                 .strafeTo(new Vector2d(-35, 15))
                 .strafeToLinearHeading(new Vector2d(-50, 15), Math.toRadians(269))
                 .strafeTo(new Vector2d(-50,46))
-                .strafeTo(new Vector2d(-50, 15))
-                .strafeTo(new Vector2d(-60, 15))
-                .strafeTo(new Vector2d(-60, 46))
-                .strafeTo(new Vector2d (-40, 38))
-                .strafeTo(new Vector2d(-41, 55))
-                .strafeTo(new Vector2d(-41,54.5))
+                .strafeTo(new Vector2d (-40, 45))
+                .strafeTo(new Vector2d(-41, 57))
+                .strafeTo(new Vector2d(-41,56.25))
                 .stopAndAdd(armActions.closeClaw())
                 .stopAndAdd(armActions.raiseArm())
                 .strafeToLinearHeading(new Vector2d(-8, 42), Math.toRadians(90))
@@ -64,7 +65,15 @@ public class Spec_Auto extends LinearOpMode {
                 .stopAndAdd(armActions.openClaw())
                 .stopAndAdd(armActions.lowerArm())
                 .strafeTo(new Vector2d(-8, 45))
-                .strafeToLinearHeading(new Vector2d(-50, 60), Math.toRadians(270));
+                .strafeToLinearHeading(new Vector2d(-41, 66), Math.toRadians(269))
+                .strafeTo(new Vector2d(-41,70))
+                .strafeTo(new Vector2d(-41,69.25))
+                .stopAndAdd(armActions.closeClaw())
+                .stopAndAdd(armActions.raiseArm())
+                .strafeToLinearHeading(new Vector2d(-5, 32), Math.toRadians(90))
+                .stopAndAdd(armActions.halfLowerArm())
+                .stopAndAdd(armActions.openClaw())
+                .stopAndAdd(armActions.lowerArm());
 
         TrajectoryActionBuilder traj_wait = drive.actionBuilder(new Pose2d(-41, 58, Math.toRadians(180)))
                 .strafeTo(new Vector2d(-41, 50))
@@ -92,19 +101,24 @@ public class Spec_Auto extends LinearOpMode {
         Action trajectory_1;
         Action trajectory_2;
         Action trajectory_3;
+        Action trajectory_1_finish;
         Action trajectory_4;
         Action trajectory_wait;
 
         trajectory_1 = traj_1.build();
         trajectory_2 = traj_2.build();
         trajectory_3 = traj_3.build();
+        trajectory_1_finish = traj_1_finish.build();
         trajectory_4 = traj_4.build();
         trajectory_wait = traj_wait.build();
 
         Actions.runBlocking(
                 new SequentialAction(
+                        new ParallelAction(
                         armActions.raiseArm(),
-                        trajectory_1,
+                        trajectory_1
+                                ),
+                        trajectory_1_finish,
                         armActions.halfLowerArm(),
                         armActions.openClaw(),
                         new ParallelAction(
