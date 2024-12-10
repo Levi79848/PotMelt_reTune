@@ -39,7 +39,7 @@ public class Three_Spec_Auto extends LinearOpMode {
 
 
         TrajectoryActionBuilder traj_1 = drive.actionBuilder(startPose)
-                .strafeTo(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y+1));
+                .strafeTo(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y-1));
 
         TrajectoryActionBuilder traj_1_finish = drive.actionBuilder(new Pose2d(subPoseMid.position.x-10, subPoseMid.position.y+1, Math.toRadians(90)))
                 .strafeTo(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y-3));
@@ -57,24 +57,25 @@ public class Three_Spec_Auto extends LinearOpMode {
                 .strafeTo(new Vector2d(-50,46))
                 .strafeTo(new Vector2d (-50, 40))
                 .strafeTo(new Vector2d (-40, 40))
-                .strafeTo(new Vector2d(-41, 57))
-                .strafeTo(new Vector2d(-41,56.25))
+                .strafeTo(new Vector2d(-43, 57))
+                .strafeTo(new Vector2d(-43,56.25))
                 .stopAndAdd(armActions.closeClaw())
                 .stopAndAdd(armActions.raiseArm())
                 .strafeToLinearHeading(new Vector2d(-4, 42), Math.toRadians(90))
                 .strafeTo(new Vector2d(-4, 38))
                 .stopAndAdd(armActions.halfLowerArm())
-                .stopAndAdd(armActions.openClaw())
+                .stopAndAdd(armActions.openClaw());
+
+        TrajectoryActionBuilder traj_4 = drive.actionBuilder(new Pose2d(-4, 38, Math.toRadians(90)))
                 .strafeTo(new Vector2d(-8, 45))
-                .stopAndAdd(armActions.lowerArm())
                 .stopAndAdd(armActions.raiseClaw())
-                .strafeToLinearHeading(new Vector2d(-38, 63), Math.toRadians(269))
-                .strafeTo(new Vector2d(-38,74))
-                .strafeTo(new Vector2d(-38,73.25))
+                .strafeToLinearHeading(new Vector2d(-40, 63), Math.toRadians(269))
+                .strafeTo(new Vector2d(-40,74))
+                .strafeTo(new Vector2d(-40,73.25))
                 .stopAndAdd(armActions.closeClaw())
                 .stopAndAdd(armActions.raiseArm())
                 .strafeToLinearHeading(new Vector2d(-5, 50), Math.toRadians(90))
-                .strafeTo(new Vector2d(-5,46))
+                .strafeTo(new Vector2d(-5,44))
                 .stopAndAdd(armActions.halfLowerArm())
                 .stopAndAdd(armActions.openClaw())
                 .stopAndAdd(armActions.lowerArm());
@@ -82,10 +83,6 @@ public class Three_Spec_Auto extends LinearOpMode {
         TrajectoryActionBuilder traj_wait = drive.actionBuilder(new Pose2d(-41, 58, Math.toRadians(180)))
                 .strafeTo(new Vector2d(-41, 50))
                 .waitSeconds(1);
-
-        TrajectoryActionBuilder traj_4 = drive.actionBuilder(new Pose2d(-41, 50, Math.toRadians(90)))
-                .strafeTo(new Vector2d(-41,54))
-                .strafeToLinearHeading(new Vector2d(-15, 38), Math.toRadians(90));
 
 
 
@@ -113,8 +110,8 @@ public class Three_Spec_Auto extends LinearOpMode {
         trajectory_2 = traj_2.build();
         trajectory_3 = traj_3.build();
         trajectory_1_finish = traj_1_finish.build();
-        trajectory_4 = traj_4.build();
         trajectory_wait = traj_wait.build();
+        trajectory_4 = traj_4.build();
 
         Actions.runBlocking(
                 new SequentialAction(
@@ -122,14 +119,18 @@ public class Three_Spec_Auto extends LinearOpMode {
                         armActions.raiseArm(),
                         trajectory_1
                                 ),
-                        trajectory_1_finish,
+                        //trajectory_1_finish,
                         armActions.halfLowerArm(),
                         armActions.openClaw(),
                         new ParallelAction(
                                 trajectory_2,
                                 armActions.lowerArm()
                         ),
-                        trajectory_3
+                        trajectory_3,
+                        new ParallelAction(
+                                trajectory_4,
+                                armActions.lowerArm()
+                        )
                         //armActions.closeClaw(),
                         //trajectory_wait,
                         //armActions.raiseArm()

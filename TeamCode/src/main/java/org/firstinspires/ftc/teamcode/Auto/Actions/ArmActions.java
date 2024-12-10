@@ -154,7 +154,7 @@ public class ArmActions {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    claw.setPosition(1);
+                    claw.setPosition(0.9);
                 }
 
                 return initialized;
@@ -229,7 +229,7 @@ public class ArmActions {
 
                 double pos = leftSlide.getCurrentPosition();
                 packet.put("liftPos", pos);
-                if (pos > 1700) {
+                if (pos > 1500) {
                     return true;
                 } else {
                     leftSlide.setPower(0);
@@ -257,7 +257,7 @@ public class ArmActions {
 
                 double pos = leftSlide.getCurrentPosition();
                 packet.put("liftPos", pos);
-                if (pos < 150) {
+                if (pos < 250) {
                     return true;
                 } else {
                     leftSlide.setPower(0);
