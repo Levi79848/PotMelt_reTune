@@ -38,6 +38,7 @@ public class Left_Auto_Prototype extends LinearOpMode {
 
 
         TrajectoryActionBuilder traj_1 = drive.actionBuilder(startPose)
+                .waitSeconds(8)
                 .strafeTo(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y));
 
         TrajectoryActionBuilder traj_2 = drive.actionBuilder(new Pose2d(-10, 35, Math.toRadians(90)))
