@@ -79,6 +79,7 @@ public class Three_Spec_Auto extends LinearOpMode {
                 .stopAndAdd(armActions.halfLowerArm())
                 .stopAndAdd(armActions.openClaw())
                 .stopAndAdd(armActions.lowerArm());
+        //changes
 
         TrajectoryActionBuilder traj_wait = drive.actionBuilder(new Pose2d(-41, 58, Math.toRadians(180)))
                 .strafeTo(new Vector2d(-41, 50))
