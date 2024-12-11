@@ -39,23 +39,19 @@ public class Spline_Three_Spec_Auto extends LinearOpMode {
 
 
         TrajectoryActionBuilder traj_1 = drive.actionBuilder(startPose)
-                .strafeTo(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y+5))
+                .strafeTo(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y+5));
+
+        TrajectoryActionBuilder traj_2 = drive.actionBuilder(new Pose2d(subPoseMid.position.x-10, subPoseMid.position.y+5, Math.toRadians(90)))
                 .setReversed(false)
                 .splineToLinearHeading(new Pose2d(-30,38, Math.toRadians(270)), Math.toRadians(180))
                 .splineToConstantHeading(new Vector2d(-40,17), Math.toRadians(180))
                 .splineToConstantHeading(new Vector2d(-45,55), Math.toRadians(90)) //pushes first sample
-                .splineToConstantHeading(new Vector2d(-50, 17), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-50, 13), Math.toRadians(180))
                 .splineToConstantHeading(new Vector2d(-55,55), Math.toRadians(90)) //pushes second sample
-                .splineToConstantHeading(new Vector2d(-47, 68), Math.toRadians(90)); //goes to pick up spec
+                .splineToConstantHeading(new Vector2d(-47, 62), Math.toRadians(90)) //goes to pick up spec
+                .stopAndAdd(armActions.closeClaw())
+                .stopAndAdd(armActions.raiseArm());
 
-        TrajectoryActionBuilder traj_1_finish = drive.actionBuilder(new Pose2d(subPoseMid.position.x-10, subPoseMid.position.y+1, Math.toRadians(90)))
-                .strafeTo(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y-3));
-
-        TrajectoryActionBuilder traj_2 = drive.actionBuilder(new Pose2d(-10, 32, Math.toRadians(90)))
-                .waitSeconds(0.5)
-                //.strafeTo(new Vector2d(startPose.position.x, startPose.position.y-3));
-                .strafeTo(new Vector2d(-10, 40))
-                .strafeTo(new Vector2d(-35, 38));
 
         TrajectoryActionBuilder traj_3 = drive.actionBuilder(new Pose2d(-35, 38, Math.toRadians(90)))
                 .stopAndAdd(armActions.raiseClaw())
@@ -110,20 +106,29 @@ public class Spline_Three_Spec_Auto extends LinearOpMode {
         Action trajectory_1;
         Action trajectory_2;
         Action trajectory_3;
-        Action trajectory_1_finish;
         Action trajectory_4;
         Action trajectory_wait;
 
         trajectory_1 = traj_1.build();
         trajectory_2 = traj_2.build();
         trajectory_3 = traj_3.build();
-        trajectory_1_finish = traj_1_finish.build();
         trajectory_wait = traj_wait.build();
         trajectory_4 = traj_4.build();
 
         Actions.runBlocking(
                 new SequentialAction(
-                        trajectory_1
+                        new ParallelAction(
+                                armActions.raiseClaw(),
+                                armActions.closeClaw(),
+                                armActions.raiseArm(),
+                                trajectory_1
+                        ),
+                        armActions.halfLowerArm(),
+                        armActions.openClaw(),
+                        new ParallelAction(
+                                armActions.lowerArm(),
+                                trajectory_2
+                        )
                         /*
                         new ParallelAction(
                                 armActions.raiseArm(),
