@@ -57,7 +57,7 @@ public class Two_Spec_Auto extends LinearOpMode {
                 .strafeTo(new Vector2d(-41, 55))
                 .strafeTo(new Vector2d(-41,54.5))
                 .stopAndAdd(armActions.closeClaw())
-                .stopAndAdd(armActions.raiseArm())
+                .stopAndAdd(armActions.raiseArm(1, 2000))
                 .strafeToLinearHeading(new Vector2d(-8, 42), Math.toRadians(90))
                 .strafeTo(new Vector2d(-8, 34))
                 .stopAndAdd(armActions.halfLowerArm())
@@ -103,7 +103,7 @@ public class Two_Spec_Auto extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        armActions.raiseArm(),
+                        armActions.raiseArm(1, 2000),
                         trajectory_1,
                         armActions.halfLowerArm(),
                         armActions.openClaw(),

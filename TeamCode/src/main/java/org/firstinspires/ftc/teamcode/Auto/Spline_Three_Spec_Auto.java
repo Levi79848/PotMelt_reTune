@@ -39,41 +39,52 @@ public class Spline_Three_Spec_Auto extends LinearOpMode {
 
 
         TrajectoryActionBuilder traj_1 = drive.actionBuilder(startPose)
-                .strafeTo(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y+5));
+                .splineToConstantHeading(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y+6), Math.toRadians(270));
 
         TrajectoryActionBuilder traj_2 = drive.actionBuilder(new Pose2d(subPoseMid.position.x-10, subPoseMid.position.y+5, Math.toRadians(90)))
                 .setReversed(false)
-                .splineToLinearHeading(new Pose2d(-30,38, Math.toRadians(270)), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-40,17), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-45,57), Math.toRadians(90)) //pushes first sample
-                .splineToConstantHeading(new Vector2d(-50, 13), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-55,55), Math.toRadians(90)) //pushes second sample
+                .splineToSplineHeading(new Pose2d(-30,38, Math.toRadians(270)), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-40,7), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-45,48), Math.toRadians(90)) //pushes first sample
+                .splineToConstantHeading(new Vector2d(-52, 0), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-57,44), Math.toRadians(90)) //pushes second sample
+                .setReversed(false)
                 .setTangent(270)
-                .splineToConstantHeading(new Vector2d(-51, 52), Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(-46, 70), Math.toRadians(90)) //goes to pick up spec
-                //.strafeTo(new Vector2d(-46,70.25))
-                .stopAndAdd(armActions.closeClawBlocking());
+                .splineToConstantHeading(new Vector2d(-48, 40), Math.toRadians(0))
+                .setReversed(false)
+                .setTangent(0)
+                .splineToConstantHeading(new Vector2d(-43, 52), Math.toRadians(90)) //goes to pick up spec
+                .stopAndAdd(armActions.closeClawBlocking())
+                .waitSeconds(0.2);
 
-        TrajectoryActionBuilder traj_3 = drive.actionBuilder(new Pose2d(-46, 70.25, Math.toRadians(90)))
-                .waitSeconds(0.5)
+        TrajectoryActionBuilder traj_3 = drive.actionBuilder(new Pose2d(-43, 52, Math.toRadians(90)))
+                .waitSeconds(0.2)
                 //.strafeTo(new Vector2d(-46, 60))
+                //.setTangent(200)
+                //.splineToConstantHeading(new Vector2d(-25, 45), Math.toRadians(300))
+                //.setTangent(300)
+                //.splineToSplineHeading(new Pose2d(-35,50, Math.toRadians(270)), Math.toRadians(270))
                 .setTangent(300)
-                .splineToLinearHeading(new Pose2d(-10,16,Math.toRadians(90)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(5,37,Math.toRadians(90)), Math.toRadians(270))
                 .stopAndAdd(armActions.halfLowerArm())
                 .stopAndAdd(armActions.openClaw());
 
-        TrajectoryActionBuilder traj_4 = drive.actionBuilder(new Pose2d(-4, 38, Math.toRadians(90)))
+        TrajectoryActionBuilder traj_4 = drive.actionBuilder(new Pose2d(0, 37, Math.toRadians(90)))
                 .setTangent(90)
-                .splineToLinearHeading(new Pose2d(-54, 68.25, Math.toRadians(270)), Math.toRadians(90)) //goes to pick up spec2
-                //.strafeTo(new Vector2d(-54, 69))
-                //.strafeTo(new Vector2d(-54,68.25))
-                .stopAndAdd(armActions.closeClaw());
+                .splineToSplineHeading(new Pose2d(-49, 58, Math.toRadians(270)), Math.toRadians(90)) //goes to pick up spec2
+                .stopAndAdd(armActions.closeClawBlocking())
+                .waitSeconds(0.2);
 
-        TrajectoryActionBuilder traj_5 = drive.actionBuilder(new Pose2d(-54, 68.25, Math.toRadians(90)))
-                .waitSeconds(0.3)
-                .strafeTo(new Vector2d(-54, 56))
-                .setTangent(270)
-                .splineToLinearHeading(new Pose2d(-15,36,Math.toRadians(90)), Math.toRadians(270));
+        TrajectoryActionBuilder traj_5 = drive.actionBuilder(new Pose2d(-49, 58, Math.toRadians(90)))
+                .waitSeconds(0.2)
+                //.strafeTo(new Vector2d(-54, 56))
+                .setTangent(300)
+                //.splineToSplineHeading(new Pose2d(-35,50, Math.toRadians(270)), Math.toRadians(270))
+                .splineToSplineHeading(new Pose2d(0,37,Math.toRadians(90)), Math.toRadians(270))
+                .waitSeconds(0.2)
+                .stopAndAdd(armActions.halfLowerArm())
+                .stopAndAdd(armActions.openClaw())
+                .stopAndAdd(armActions.lowerArm());
 
         TrajectoryActionBuilder traj_6 = drive.actionBuilder(new Pose2d(-15, 68.25, Math.toRadians(90)))
                 .setTangent(90)
@@ -117,7 +128,7 @@ public class Spline_Three_Spec_Auto extends LinearOpMode {
                         new ParallelAction(
                                 armActions.raiseClaw(),
                                 armActions.closeClaw(),
-                                armActions.raiseArm(),
+                                armActions.raiseArm(1, 1800),
                                 trajectory_1
                         ),
                         armActions.halfLowerArm(),
@@ -127,7 +138,7 @@ public class Spline_Three_Spec_Auto extends LinearOpMode {
                                 trajectory_2
                         ),
                         new ParallelAction(
-                                armActions.raiseArm(),
+                                armActions.raiseArm(1, 2000),
                                 trajectory_3
                         ),
                         new ParallelAction(
@@ -135,15 +146,16 @@ public class Spline_Three_Spec_Auto extends LinearOpMode {
                                 trajectory_4
                         ),
                         new ParallelAction(
-                                armActions.raiseArm(),
+                                armActions.raiseArm(1, 2000),
                                 trajectory_5
                         ),
                         armActions.halfLowerArm(),
-                        armActions.openClaw(),
+                        armActions.openClaw()
+                        /*
                         new ParallelAction(
                                 armActions.lowerArm(),
                                 trajectory_6
-                        )
+                        )*/
                         /*
                         new ParallelAction(
                                 armActions.raiseArm(),

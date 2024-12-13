@@ -19,28 +19,42 @@ public class MeepMeepApp {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-46, 70.25, Math.toRadians(90)))
-                        //.strafeTo(new Vector2d(-46, 60))
-                        .setTangent(300)
-                        .splineToLinearHeading(new Pose2d(-10,36,Math.toRadians(90)), Math.toRadians(270))
-                        //.stopAndAdd(armActions.halfLowerArm())
-                        //.stopAndAdd(armActions.openClaw());
-                /*
-                .strafeTo(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y+5))
+        myBot.runAction(myBot.getDrive().actionBuilder(startPose)
+                .splineToConstantHeading(new Vector2d(subPoseMid.position.x-10, subPoseMid.position.y+6), Math.toRadians(270))
                 .setReversed(false)
-                .splineToLinearHeading(new Pose2d(-30,38, Math.toRadians(270)), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-40,17), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-45,55), Math.toRadians(90)) //pushes first sample
-                .splineToConstantHeading(new Vector2d(-50, 13), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-55,55), Math.toRadians(90)) //pushes second sample
+                .splineToSplineHeading(new Pose2d(-30,38, Math.toRadians(270)), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-40,7), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-45,48), Math.toRadians(90)) //pushes first sample
+                .splineToConstantHeading(new Vector2d(-52, 0), Math.toRadians(180))
+                .splineToConstantHeading(new Vector2d(-57,44), Math.toRadians(90)) //pushes second sample
+                .setReversed(false)
                 .setTangent(270)
-                .splineToConstantHeading(new Vector2d(-51, 52), Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(-46, 71), Math.toRadians(90)) //goes to pick up spec
-                .strafeTo(new Vector2d(-46,70.25))
-                //.splineToConstantHeading(new Vector2d(-40,64), Math.toRadians(90))
-                .strafeTo(new Vector2d(-46, 64))
-                .setTangent(270)
-                .splineToLinearHeading(new Pose2d(0,34,Math.toRadians(90)), Math.toRadians(270))*/
+                .splineToConstantHeading(new Vector2d(-48, 40), Math.toRadians(0))
+                .setReversed(false)
+                .setTangent(0)
+                .splineToConstantHeading(new Vector2d(-43, 57), Math.toRadians(90)) //goes to pick up spec
+                .waitSeconds(0.25)
+
+                .waitSeconds(0.2)
+                //.strafeTo(new Vector2d(-46, 60))
+                //.setTangent(200)
+                //.splineToConstantHeading(new Vector2d(-25, 45), Math.toRadians(300))
+                //.setTangent(300)
+                //.splineToSplineHeading(new Pose2d(-35,50, Math.toRadians(270)), Math.toRadians(270))
+                .setTangent(300)
+                .splineToLinearHeading(new Pose2d(5,37,Math.toRadians(90)), Math.toRadians(270))
+
+                .setTangent(90)
+                .splineToLinearHeading(new Pose2d(-49, 58, Math.toRadians(270)), Math.toRadians(90)) //goes to pick up spec2
+                .waitSeconds(0.2)
+
+                .waitSeconds(0.2)
+                //.strafeTo(new Vector2d(-54, 56))
+                .setTangent(300)
+                //.splineToSplineHeading(new Pose2d(-35,50, Math.toRadians(270)), Math.toRadians(270))
+                .splineToLinearHeading(new Pose2d(0,37,Math.toRadians(90)), Math.toRadians(270))
+                .waitSeconds(0.2)
+
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_JUICE_DARK)

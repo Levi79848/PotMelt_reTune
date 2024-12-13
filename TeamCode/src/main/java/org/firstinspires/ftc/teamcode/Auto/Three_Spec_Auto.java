@@ -60,7 +60,7 @@ public class Three_Spec_Auto extends LinearOpMode {
                 .strafeTo(new Vector2d(-43, 57))
                 .strafeTo(new Vector2d(-43,56.25))
                 .stopAndAdd(armActions.closeClaw())
-                .stopAndAdd(armActions.raiseArm())
+                .stopAndAdd(armActions.raiseArm(1, 2000))
                 .strafeToLinearHeading(new Vector2d(-4, 42), Math.toRadians(90))
                 .strafeTo(new Vector2d(-4, 38))
                 .stopAndAdd(armActions.halfLowerArm())
@@ -73,7 +73,7 @@ public class Three_Spec_Auto extends LinearOpMode {
                 .strafeTo(new Vector2d(-40,74))
                 .strafeTo(new Vector2d(-40,73.25))
                 .stopAndAdd(armActions.closeClaw())
-                .stopAndAdd(armActions.raiseArm())
+                .stopAndAdd(armActions.raiseArm(1, 2000))
                 .strafeToLinearHeading(new Vector2d(-5, 50), Math.toRadians(90))
                 .strafeTo(new Vector2d(-5,44))
                 .stopAndAdd(armActions.halfLowerArm())
@@ -117,7 +117,7 @@ public class Three_Spec_Auto extends LinearOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         new ParallelAction(
-                        armActions.raiseArm(),
+                        armActions.raiseArm(1, 2000),
                         trajectory_1
                                 ),
                         //trajectory_1_finish,

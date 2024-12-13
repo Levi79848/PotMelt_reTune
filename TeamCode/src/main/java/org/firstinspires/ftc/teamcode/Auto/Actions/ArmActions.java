@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Auto.Actions;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -82,7 +84,7 @@ public class ArmActions {
 
     ;
 
-    public Action raiseArm() {
+    public Action raiseArm(int power,int distance ) {
         return new Action() {
             private boolean initialized = false;
 
@@ -91,14 +93,14 @@ public class ArmActions {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    rightSlide.setPower(1);
-                    leftSlide.setPower(1);
+                    rightSlide.setPower(power);
+                    leftSlide.setPower(power);
                     initialized = true;
                 }
 
                 double pos = leftSlide.getCurrentPosition();
                 packet.put("liftPos", pos);
-                if (pos < 2000) {
+                if (pos < distance) {
                     return true;
                 } else {
                     leftSlide.setPower(0);
@@ -156,10 +158,12 @@ public class ArmActions {
                 if (!initialized) {
                     claw.setPosition(0);
                 }
-                if (claw.getPosition() == 0){
-                return initialized;
+                if (claw.getPosition() <= 0.1){
+                    return initialized;
+                } else {
+                    return true;
+
                 }
-                return true;
             }
         };
     }
@@ -214,8 +218,8 @@ public class ArmActions {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    rightSlide.setPower(-0.6);
-                    leftSlide.setPower(-0.6);
+                    rightSlide.setPower(-1);
+                    leftSlide.setPower(-1);
                     initialized = true;
                 }
 
@@ -239,14 +243,14 @@ public class ArmActions {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    rightSlide.setPower(-0.4);
-                    leftSlide.setPower(-0.4);
+                    rightSlide.setPower(-1);
+                    leftSlide.setPower(-1);
                     initialized = true;
                 }
 
                 double pos = leftSlide.getCurrentPosition();
                 packet.put("liftPos", pos);
-                if (pos > 1500) {
+                if (pos > 1600) {
                     return true;
                 } else {
                     leftSlide.setPower(0);

@@ -70,7 +70,7 @@ public class Spec_Auto_Prototype extends LinearOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        armActions.raiseArm(),
+                        armActions.raiseArm(1, 2000),
                         trajectory_1,
                         armActions.halfLowerArm(),
                         armActions.openClaw(),
