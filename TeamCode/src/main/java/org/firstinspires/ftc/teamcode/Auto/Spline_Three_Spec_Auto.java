@@ -47,15 +47,14 @@ public class Spline_Three_Spec_Auto extends LinearOpMode {
                 .splineToConstantHeading(new Vector2d(-40,7), Math.toRadians(180))
                 .splineToConstantHeading(new Vector2d(-45,48), Math.toRadians(90)) //pushes first sample
                 .splineToConstantHeading(new Vector2d(-52, 0), Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-57,44), Math.toRadians(90)) //pushes second sample
+                .splineToConstantHeading(new Vector2d(-57,42), Math.toRadians(90)) //pushes second sample
                 .setReversed(false)
                 .setTangent(270)
                 .splineToConstantHeading(new Vector2d(-48, 40), Math.toRadians(0))
                 .setReversed(false)
                 .setTangent(0)
-                .splineToConstantHeading(new Vector2d(-43, 52), Math.toRadians(90)) //goes to pick up spec
-                .stopAndAdd(armActions.closeClawBlocking())
-                .waitSeconds(0.2);
+                .splineToConstantHeading(new Vector2d(-43, 49), Math.toRadians(90)) //goes to pick up spec
+                .stopAndAdd(armActions.closeClawFull());
 
         TrajectoryActionBuilder traj_3 = drive.actionBuilder(new Pose2d(-43, 52, Math.toRadians(90)))
                 .waitSeconds(0.2)

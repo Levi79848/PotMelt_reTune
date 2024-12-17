@@ -168,6 +168,19 @@ public class ArmActions {
         };
     }
 
+    public Action closeClawFull() {
+        return new Action() {
+            private boolean initialized;
+            public boolean run(@NonNull TelemetryPacket packet) {
+                claw.setPosition(0);
+                while (claw.getPosition() > 0.1) {
+                    claw.setPosition(0);}
+                return initialized;
+                }
+            };
+        }
+
+
     public Action openClaw() {
         return new Action() {
             private boolean initialized;
