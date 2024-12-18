@@ -109,6 +109,32 @@ public class ArmActions {
         };
     }
 
+    public Action raiseArmParm(int position) {
+        return new Action() {
+            private boolean initialized = false;
+
+
+
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                if (!initialized) {
+                    rightSlide.setPower(1);
+                    leftSlide.setPower(1);
+                    initialized = true;
+                }
+
+                double pos = leftSlide.getCurrentPosition();
+                if (pos < position) {
+                    return true;
+                } else {
+                    leftSlide.setPower(0);
+                    rightSlide.setPower(0);
+                    return false;
+                }
+            }
+        };
+    }
+
     public Action deposit() {
         return new Action() {
             private boolean initialized;
@@ -197,8 +223,8 @@ public class ArmActions {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    rightSlide.setPower(-0.6);
-                    leftSlide.setPower(-0.6);
+                    rightSlide.setPower(-1);
+                    leftSlide.setPower(-1);
                     initialized = true;
                 }
 
@@ -222,8 +248,8 @@ public class ArmActions {
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
                 if (!initialized) {
-                    rightSlide.setPower(-0.4);
-                    leftSlide.setPower(-0.4);
+                    rightSlide.setPower(-1);
+                    leftSlide.setPower(-1);
                     initialized = true;
                 }
 
