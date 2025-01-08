@@ -98,7 +98,7 @@ public class ArmActions {
 
                 double pos = leftSlide.getCurrentPosition();
                 packet.put("liftPos", pos);
-                if (pos < 2000) {
+                if (pos < 2050) {
                     return true;
                 } else {
                     leftSlide.setPower(0);
@@ -194,7 +194,7 @@ public class ArmActions {
 
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                clawPivot.setPosition(.62);
+                clawPivot.setPosition(.58);
 
                 return initialized;
             }
@@ -230,7 +230,7 @@ public class ArmActions {
 
                 double pos = leftSlide.getCurrentPosition();
                 packet.put("liftPos", pos);
-                if (pos > 20) {
+                if (pos > 10) {
                     return true;
                 } else {
                     leftSlide.setPower(0);
@@ -255,7 +255,7 @@ public class ArmActions {
 
                 double pos = leftSlide.getCurrentPosition();
                 packet.put("liftPos", pos);
-                if (pos > 1500) {
+                if (pos > 1600) {
                     return true;
                 } else {
                     leftSlide.setPower(0);
