@@ -37,7 +37,7 @@ public class Four_Spec extends LinearOpMode {
 
 
         TrajectoryActionBuilder traj_1 = drive.actionBuilder(startPose)
-                .strafeTo(new Vector2d(-10, 40)); //Scores first spec
+                .strafeTo(new Vector2d(-10, 36)); //Scores first spec
 
         TrajectoryActionBuilder traj_2 = drive.actionBuilder(new Pose2d(-10, 40, Math.toRadians(90)))
                 .setTangent(Math.toRadians(90))
@@ -45,36 +45,35 @@ public class Four_Spec extends LinearOpMode {
                 .setTangent(Math.toRadians(270))
                 .splineToConstantHeading(new Vector2d(-40, 13), Math.toRadians(180))
                 .setTangent(Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-45, 52), Math.toRadians(270)) //push 1st sample in
+                .splineToConstantHeading(new Vector2d(-45, 54), Math.toRadians(270)) //push 1st sample in
                 .setTangent(Math.toRadians(270))
                 .splineToConstantHeading(new Vector2d(-53,5), Math.toRadians(180))
                 .setTangent(Math.toRadians(180))
-                .splineToConstantHeading(new Vector2d(-55, 44), Math.toRadians(270)) //push 2nd sample in
+                .splineToConstantHeading(new Vector2d(-55, 47), Math.toRadians(270)) //push 2nd sample in
                 .setTangent(Math.toRadians(270))
                 .splineToConstantHeading(new Vector2d(-50, 35), Math.toRadians(0))
                 .setTangent(Math.toRadians(0))
-                .splineToConstantHeading(new Vector2d(-44,50), Math.toRadians(90)); //goes to pick up spec
+                .splineToConstantHeading(new Vector2d(-44,53), Math.toRadians(90)); //goes to pick up spec
 
         TrajectoryActionBuilder traj_3 = drive.actionBuilder(new Pose2d(-44, 50, Math.toRadians(270)))
                 .setTangent(Math.toRadians(270))
-                .splineToSplineHeading(new Pose2d(0,36, Math.toRadians(90)), Math.toRadians(270)); //scores 2nd spec
-
+                .splineToSplineHeading(new Pose2d(0,35.5, Math.toRadians(90)), Math.toRadians(270)); //scores 2nd spec
 
         TrajectoryActionBuilder traj_4 = drive.actionBuilder(new Pose2d(0, 36, Math.toRadians(90)))
                 .setTangent(Math.toRadians(90))
-                .splineToSplineHeading(new Pose2d(-45,64, Math.toRadians(270)), Math.toRadians(90)); //pick up 3rd spec
+                .splineToSplineHeading(new Pose2d(-45,61.5, Math.toRadians(270)), Math.toRadians(90)); //pick up 3rd spec
 
         TrajectoryActionBuilder traj_5 = drive.actionBuilder(new Pose2d(-40, 64, Math.toRadians(270)))
                 .setTangent(Math.toRadians(270))
-                .splineToSplineHeading(new Pose2d(-5,36, Math.toRadians(90)), Math.toRadians(270)); //score 3rd spec
+                .splineToSplineHeading(new Pose2d(-5,33.5, Math.toRadians(90)), Math.toRadians(270)); //score 3rd spec
 
         TrajectoryActionBuilder traj_6 = drive.actionBuilder(new Pose2d(-5, 36, Math.toRadians(90)))
                 .setTangent(Math.toRadians(90))
-                .splineToSplineHeading(new Pose2d(-48, 64, Math.toRadians(270)), Math.toRadians(90)); //pick up 4th spec
+                .splineToSplineHeading(new Pose2d(-48, 61, Math.toRadians(270)), Math.toRadians(90)); //pick up 4th spec
 
         TrajectoryActionBuilder traj_7 = drive.actionBuilder(new Pose2d(-45, 64, Math.toRadians(270)))
                 .setTangent(Math.toRadians(270))
-                .splineToSplineHeading(new Pose2d(3, 38, Math.toRadians(90)), Math.toRadians(270)); //score 4th spec
+                .splineToSplineHeading(new Pose2d(3, 35.5, Math.toRadians(90)), Math.toRadians(270)); //score 4th spec
 
         TrajectoryActionBuilder traj_8 = drive.actionBuilder(new Pose2d(5, 38, Math.toRadians(90)))
                 .setTangent(Math.toRadians(90))
@@ -115,7 +114,7 @@ public class Four_Spec extends LinearOpMode {
                                 armActions.raiseClaw(),
                                 armActions.closeClaw(),
                                 trajectory_1,
-                                armActions.raiseArmParm(1800)
+                                armActions.raiseArmParm(1750)
                         ),
                         armActions.halfLowerArm(), //score 1st spec
                         armActions.openClaw(),
@@ -123,6 +122,7 @@ public class Four_Spec extends LinearOpMode {
                                 trajectory_2, //pushes samples
                                 armActions.lowerArm()
                         ),
+                        armActions.raiseClaw(),
                         armActions.closeClaw(), //1st pick up off wall
                         new ParallelAction(
                                 trajectory_3,
@@ -134,6 +134,7 @@ public class Four_Spec extends LinearOpMode {
                                 trajectory_4, //goes to pick 3rd spec off wall
                                 armActions.lowerArm()
                         ),
+                        armActions.raiseClaw(),
                         armActions.closeClaw(),
                         new ParallelAction(
                                 trajectory_5,
@@ -145,6 +146,7 @@ public class Four_Spec extends LinearOpMode {
                                 trajectory_6, //goes to pick up 4th spec
                                 armActions.lowerArm()
                         ),
+                        armActions.raiseClaw(),
                         armActions.closeClaw(),
                         new ParallelAction(
                                 trajectory_7,
